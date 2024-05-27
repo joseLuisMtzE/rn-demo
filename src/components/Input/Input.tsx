@@ -43,7 +43,7 @@ export default function Input({
   id,
 }: TextInputProps) {
   return (
-    <View style={styles.container}>
+    <View>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
         style={[
@@ -68,19 +68,14 @@ export default function Input({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // marginVertical: 8,
-  },
   input: {
     width: "100%",
     height: 40,
     borderRadius: 8,
     margin: 0,
-    // paddingLeft: 8,
   },
   inputMultiline: {
     height: "auto",
-    // minHeight: 80,
     textAlignVertical: "top",
   },
   label: {

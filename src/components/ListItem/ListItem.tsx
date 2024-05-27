@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
-import ArrowRight from "../../icons/ArrowRight";
+import { Feather } from "@expo/vector-icons";
 
 interface Item {
   label: string;
@@ -27,7 +27,7 @@ const ListItem: React.FC<Item> = ({
           <Text style={styles.itemName}>{label}</Text>
           <Text style={{ opacity: 0.5 }}>{description}</Text>
         </View>
-        <ArrowRight fill="#000" />
+        <Feather name="chevron-right" size={24} color="black" />
       </View>
     </TouchableOpacity>
   );

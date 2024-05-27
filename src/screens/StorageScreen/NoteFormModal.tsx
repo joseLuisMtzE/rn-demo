@@ -99,7 +99,6 @@ export default function NoteFormModal({ navigation, route }: Props) {
                 iconName={"trash-2"}
                 onPress={() => {
                   deleteNoteAlert(note.title, note.id);
-                  // route.params?.deleteNote(note.id);
                 }}
               />
             )}
@@ -138,7 +137,6 @@ export default function NoteFormModal({ navigation, route }: Props) {
               style={{
                 alignItems: "flex-end",
                 width: "100%",
-                // backgroundColor: "#c9c9c9s",
               }}
             >
               <FabButton
