@@ -7,6 +7,7 @@ interface Item {
   description: string;
   pathTo: string;
   navigation: any;
+  disabled: boolean;
 }
 
 const ListItem: React.FC<Item> = ({
@@ -14,6 +15,7 @@ const ListItem: React.FC<Item> = ({
   navigation,
   pathTo,
   description,
+  disabled,
 }) => {
   return (
     <TouchableOpacity
@@ -21,8 +23,9 @@ const ListItem: React.FC<Item> = ({
       onPress={() => {
         navigation.navigate(pathTo, { title: label });
       }}
+      disabled={disabled}
     >
-      <View style={styles.itemContent}>
+      <View style={[styles.itemContent, { opacity: disabled ? 0.2 : 1 }]}>
         <View style={{ display: "flex", flexDirection: "column" }}>
           <Text style={styles.itemName}>{label}</Text>
           <Text style={{ opacity: 0.5 }}>{description}</Text>

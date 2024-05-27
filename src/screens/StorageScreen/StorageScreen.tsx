@@ -145,15 +145,15 @@ export default function StorageScreen({ navigation, route }: Props) {
             }}
           />
         </View>
+        <FabButton
+          iconName={"plus"}
+          onPress={() =>
+            navigation.navigate("NoteForm", {
+              newNote: newNote,
+            })
+          }
+        />
       </View>
-      <FabButton
-        iconName={"plus"}
-        onPress={() =>
-          navigation.navigate("NoteForm", {
-            newNote: newNote,
-          })
-        }
-      />
     </SafeAreaView>
   );
 }

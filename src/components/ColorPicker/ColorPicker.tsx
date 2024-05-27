@@ -20,7 +20,7 @@ export default function ColorPicker({
         display: "flex",
         marginTop: 8,
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "flex-end",
         gap: 8,
       }}
