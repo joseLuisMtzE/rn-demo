@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    bottom: 16,
-    right: 16,
+    bottom: 0,
+    right: 0,
   },
 });
