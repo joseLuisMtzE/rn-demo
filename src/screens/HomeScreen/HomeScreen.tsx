@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "../../components/ListItem/ListItem";
 
@@ -48,7 +48,6 @@ const HomeScreen = ({ navigation }: Props) => {
           />
         )}
       />
-      {/* <Text style={{ alignSelf: "center" }}>Microsip</Text> */}
     </SafeAreaView>
   );
 };
@@ -66,9 +65,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 32, // Adjust font size as needed
-    fontWeight: "bold", // Make it bold (optional)
-    color: "#000", // Set text color (optional)
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#000",
   },
 });
 
