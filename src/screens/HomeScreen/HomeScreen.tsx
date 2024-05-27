@@ -7,31 +7,44 @@ interface Props {
   navigation: any;
 }
 
+interface HomeScreenData {
+  label: string;
+  pathTo: string;
+  navigation: any;
+  description: string;
+  disabled: boolean;
+}
+[];
+
 const HomeScreen = ({ navigation }: Props) => {
-  const json = [
+  const json: HomeScreenData[] = [
     {
       label: "Almacenamiento de documentos",
       pathTo: "Storage",
       navigation: { navigation },
       description: "Guardar datos en almacenamiento local.",
+      disabled: false,
     },
     {
       label: "Sensores",
       pathTo: "Sensors",
       navigation: { navigation },
       description: "Mostrar valores de algunos sensores.",
+      disabled: true,
     },
     {
       label: "Llamada a API",
       pathTo: "Api",
       navigation: { navigation },
       description: "Hacer una llamada a un API.",
+      disabled: true,
     },
     {
       label: "Animaciones",
       pathTo: "Animation",
       navigation: { navigation },
       description: "Animaciones, formularios, diseño responsive.",
+      disabled: true,
     },
   ];
   return (
@@ -45,6 +58,7 @@ const HomeScreen = ({ navigation }: Props) => {
             pathTo={item.pathTo}
             navigation={navigation}
             description={item.description}
+            disabled={item.disabled}
           />
         )}
       />
