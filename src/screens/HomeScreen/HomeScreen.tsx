@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }: Props) => {
       pathTo: "Sensors",
       navigation: { navigation },
       description: "Mostrar valores de algunos sensores.",
-      disabled: true,
+      disabled: false,
     },
     {
       label: "Llamada a API",

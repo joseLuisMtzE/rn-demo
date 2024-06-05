@@ -15,6 +15,13 @@ import AnimationScreen from "./src/screens/AnimationScreen/AnimationScreen";
 //Storage example
 import NoteFormModal from "./src/screens/StorageScreen/NoteFormModal";
 
+// Sensors
+import AccelerometerScreen from "./src/screens/SensorsScreen/AccelerometerScreen";
+import GyroscopeScreen from "./src/screens/SensorsScreen/GyroscopeScreen";
+import MagnetometerScreen from "./src/screens/SensorsScreen/MagnetometerScreen";
+import LightSensorScreen from "./src/screens/SensorsScreen/LightSensorScreen";
+import ProximityScreen from "./src/screens/SensorsScreen/ProximityScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -65,6 +72,43 @@ export default function App() {
             name="NoteForm"
             component={NoteFormModal}
             options={{ headerShown: false }}
+          />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen
+            name="acelerometer"
+            options={{
+              title: "Acelerómetro",
+            }}
+            component={AccelerometerScreen}
+          />
+          <Stack.Screen
+            name="gyroscope"
+            options={{
+              title: "Giroscopio",
+            }}
+            component={GyroscopeScreen}
+          />
+          <Stack.Screen
+            name="magnetometer"
+            options={{
+              title: "Magnetometro",
+            }}
+            component={MagnetometerScreen}
+          />
+          <Stack.Screen
+            name="lightSensor"
+            options={{
+              title: "Sensor de luz",
+            }}
+            component={LightSensorScreen}
+          />
+          <Stack.Screen
+            name="proximity"
+            options={{
+              title: "Sensor de proximidad",
+            }}
+            component={ProximityScreen}
           />
         </Stack.Group>
       </Stack.Navigator>

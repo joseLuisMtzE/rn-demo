@@ -18,7 +18,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": ["andorid.permissions.HIGH_SAMPLING_RATE_SENSORS"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
