@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Acelerometer from "./AccelerometerScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface Props {
   navigation: any;
@@ -82,7 +80,32 @@ const sensorsList: SensorListProps[] = [
       />
     ),
   },
+  {
+    text: "Barómetro",
+    pathTo: "barometer",
+    icon: (
+      <MaterialCommunityIcons
+        name="speedometer"
+        size={32}
+        color="black"
+        style={{ opacity: 0.2 }}
+      />
+    ),
+  },
+  {
+    text: "Pedómetro",
+    pathTo: "pedometer",
+    icon: (
+      <MaterialCommunityIcons
+        name="walk"
+        size={32}
+        color="black"
+        style={{ opacity: 0.2 }}
+      />
+    ),
+  },
 ];
+
 export default function SensorsScreen({ navigation, route }: Props) {
   useEffect(() => {
     navigation.setOptions({ title: route.params.title });
@@ -112,20 +135,19 @@ export default function SensorsScreen({ navigation, route }: Props) {
   );
 
   return (
-    // <SafeAreaView style={styles.container}>
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={sensorsList}
         renderItem={({ item }) => <Card item={item} />}
         numColumns={2}
       />
     </View>
-    // {/* </SafeAreaView> */}
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 4,
   },
 });

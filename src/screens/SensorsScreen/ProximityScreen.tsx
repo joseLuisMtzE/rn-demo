@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export default function ProximityScreen() {
   return (
     <View style={styles.container}>
-      <Text>ProximityScreen ss</Text>
+      <Text>ProximityScreen :C</Text>
     </View>
   );
 }

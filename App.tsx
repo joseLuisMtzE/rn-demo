@@ -21,6 +21,8 @@ import GyroscopeScreen from "./src/screens/SensorsScreen/GyroscopeScreen";
 import MagnetometerScreen from "./src/screens/SensorsScreen/MagnetometerScreen";
 import LightSensorScreen from "./src/screens/SensorsScreen/LightSensorScreen";
 import ProximityScreen from "./src/screens/SensorsScreen/ProximityScreen";
+import BarometerScreen from "./src/screens/SensorsScreen/BarometerScreen";
+import PedometerScreen from "./src/screens/SensorsScreen/PodometerScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +45,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" />
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Group>
+        <Stack.Group screenOptions={{ headerBackTitleVisible: false }}>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
@@ -109,6 +111,20 @@ export default function App() {
               title: "Sensor de proximidad",
             }}
             component={ProximityScreen}
+          />
+          <Stack.Screen
+            name="barometer"
+            options={{
+              title: "Barómetro",
+            }}
+            component={BarometerScreen}
+          />
+          <Stack.Screen
+            name="pedometer"
+            options={{
+              title: "Pedómetro",
+            }}
+            component={PedometerScreen}
           />
         </Stack.Group>
       </Stack.Navigator>

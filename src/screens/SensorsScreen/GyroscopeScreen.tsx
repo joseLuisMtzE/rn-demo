@@ -68,10 +68,10 @@ export default function GyroscopeScreen() {
             onPress={_slow}
             style={[styles.button, styles.middleButton]}
           >
-            <Text>Slow</Text>
+            <Text>Lento</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={_fast} style={styles.button}>
-            <Text>Fast</Text>
+            <Text>Rápido</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 5,
     padding: 8,
-    // position: "absolute",
     top: 0,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 3 },
