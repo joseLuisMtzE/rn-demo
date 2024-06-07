@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }: Props) => {
       pathTo: "Api",
       navigation: { navigation },
       description: "Hacer una llamada a un API.",
-      disabled: true,
+      disabled: false,
     },
     {
       label: "Animaciones",
