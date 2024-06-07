@@ -1,9 +1,16 @@
-import { View, Text, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../../constants/Constants";
-import { Avatar, Chip, Icon, IconButton, useTheme } from "react-native-paper";
+import { Chip, IconButton, useTheme } from "react-native-paper";
 import ExtraDataItem from "../../components/ApiScreen/ExtraDataItem";
 
 interface NavProps {
@@ -681,7 +688,7 @@ const jsonDummyRecipe = {
 };
 
 interface ExtraDataProps {
-  data: number;
+  data: number | string;
   icon: string;
   name: string;
 }
@@ -695,28 +702,38 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
 
   const [currentRecipe, setCurrentRecipe] = useState<any>(null);
   const [extraData, setExtraData] = useState<ExtraDataProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getSpecificRecipe = async (id: number) => {
+    // setCurrentRecipe(jsonDummyRecipe);
+    try {
+      await axios
+        .get(`${API_BASE_URL}/${id}/information?apiKey=${API_KEY}`)
+        .then((res) => setCurrentRecipe(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getDummySpecificRecipe = async () => {
     setCurrentRecipe(jsonDummyRecipe);
-    // try {
-    //   await axios
-    //     .get(`${API_BASE_URL}/${id}/information?apiKey=${API_KEY}`)
-    //     .then((res) => console.log(res));
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   useEffect(() => {
-    getSpecificRecipe(id);
+    // getSpecificRecipe(id);
+    getDummySpecificRecipe();
 
     return () => {};
   }, []);
 
   useEffect(() => {
     if (currentRecipe) {
-      const { servings, healthScore, aggregateLikes, readyInMinutes } =
-        currentRecipe;
+      const {
+        servings,
+        healthScore,
+        aggregateLikes,
+        readyInMinutes,
+        spoonacularScore,
+      } = currentRecipe;
       const json: ExtraDataProps[] = [
         {
           data: readyInMinutes,
@@ -725,8 +742,8 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
         },
         {
           data: servings,
-          icon: "room-service-outline",
-          name: "Porciones",
+          icon: "account-group",
+          name: "Porción",
         },
         {
           data: aggregateLikes,
@@ -738,148 +755,220 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
           icon: "dumbbell",
           name: "Healthy",
         },
+        {
+          data: `${spoonacularScore.toFixed(0)}%`,
+          icon: "account-star",
+          name: "Puntaje",
+        },
       ];
       setExtraData(json);
+      setIsLoading(false);
     }
   }, [currentRecipe]);
 
+  const BackButton = () => (
+    <IconButton
+      style={{
+        position: "absolute",
+        zIndex: 1,
+        left: 4,
+      }}
+      icon={"chevron-left"}
+      mode="contained"
+      containerColor={theme.colors.primaryContainer}
+      iconColor={theme.colors.shadow}
+      size={28}
+      onPress={() => navigation.goBack()}
+    />
+  );
+
   return (
     <>
-      {currentRecipe && (
-        <View style={{ flex: 1 }}>
-          <IconButton
-            style={{ position: "absolute", zIndex: 3 }}
-            icon={"chevron-left"}
-            mode="contained"
-            containerColor={theme.colors.inversePrimary}
-            iconColor={theme.colors.onPrimaryContainer}
-            size={28}
-            onPress={() => navigation.goBack()}
-          />
+      {!isLoading ? (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: "#fff",
+          }}
+        >
           <View>
-            <Image
-              source={{ uri: currentRecipe.image }}
-              style={{
-                width: "100%",
-                height: 200,
-                minHeight: 100,
-                zIndex: 0,
-              }}
-              resizeMode="cover"
-            />
-          </View>
-          <View
-            style={{
-              backgroundColor: "#fff",
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
-              elevation: 8,
-              shadowOpacity: 0.5,
-              paddingTop: 32,
-              paddingHorizontal: 16,
-              gap: 8,
-            }}
-          >
-            <View style={{ gap: 8 }}>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
+            <ScrollView
+              overScrollMode="never"
+              showsVerticalScrollIndicator={false}
+            >
+              <View>
+                <Image
+                  source={{ uri: currentRecipe.image }}
                   style={{
-                    flex: 1,
-                    justifyContent: "center",
+                    width: "100%",
+                    height: 150,
+                    minHeight: 100,
+                    borderBottomLeftRadius: 16,
+                    borderBottomRightRadius: 16,
                   }}
-                >
-                  <Text
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+                <View style={{ gap: 8 }}>
+                  <View
                     style={{
-                      fontSize: 24,
-                      fontFamily: "RobotoBold",
-                      maxWidth: "80%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {currentRecipe.title}
-                  </Text>
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 24,
+                          fontFamily: "RobotoBold",
+                          maxWidth: "80%",
+                        }}
+                      >
+                        {currentRecipe.title}
+                      </Text>
+                    </View>
+                  </View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    overScrollMode="never"
+                    horizontal
+                    contentContainerStyle={{
+                      gap: 4,
+                      alignItems: "center",
+                      alignContent: "center",
+                      justifyContent: "center",
+                      alignSelf: "center",
+                    }}
+                    data={currentRecipe.dishTypes}
+                    renderItem={({ item }: any) => (
+                      <Chip
+                        compact
+                        textStyle={{ fontSize: 10, fontFamily: "RobotoMedium" }}
+                        style={{ borderRadius: 50 }}
+                      >
+                        {item.charAt(0).toUpperCase() + item.slice(1)}
+                      </Chip>
+                    )}
+                  />
+                  {extraData && (
+                    <View>
+                      <View
+                        style={{
+                          backgroundColor: "#f9f9f9",
+                          height: "auto",
+                          borderRadius: 16,
+                          padding: 8,
+                        }}
+                      >
+                        <FlatList
+                          horizontal
+                          scrollEnabled={false}
+                          contentContainerStyle={{
+                            justifyContent: "space-evenly",
+                            width: "100%",
+                          }}
+                          data={extraData}
+                          renderItem={({ item }) => (
+                            <ExtraDataItem
+                              data={item.data}
+                              icon={item.icon}
+                              name={item.name}
+                            />
+                          )}
+                        />
+                      </View>
+                    </View>
+                  )}
+                  {currentRecipe?.extendedIngredients && (
+                    <View style={{ gap: 8 }}>
+                      <Text style={{ fontFamily: "RobotoBold", fontSize: 16 }}>
+                        Ingredientes
+                      </Text>
+                      <View
+                        style={{
+                          justifyContent: "space-evenly",
+                          width: "100%",
+                          paddingLeft: 8,
+                        }}
+                      >
+                        {currentRecipe.extendedIngredients.map(
+                          (item: any, i: number) => (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                width: "100%",
+                              }}
+                              key={item.id + i}
+                            >
+                              <Text
+                                style={{
+                                  fontFamily: "RobotoBold",
+                                  color: theme.colors.inversePrimary,
+                                }}
+                              >
+                                •{" "}
+                              </Text>
+                              <Text style={{ flex: 1 }}>{item.original}</Text>
+                            </View>
+                          )
+                        )}
+                      </View>
+                    </View>
+                  )}
+                  <View style={{ gap: 8 }}>
+                    <Text style={{ fontFamily: "RobotoBold", fontSize: 16 }}>
+                      Instrucciones
+                    </Text>
+                    <View
+                      style={{
+                        paddingLeft: 8,
+                      }}
+                    >
+                      {currentRecipe.analyzedInstructions[0].steps.map(
+                        (item: any) => (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              width: "100%",
+                            }}
+                            key={item.number}
+                          >
+                            <Text
+                              style={{
+                                fontFamily: "RobotoBold",
+                                color: theme.colors.inversePrimary,
+                              }}
+                            >
+                              {item.number}-{" "}
+                            </Text>
+                            <Text style={{ flex: 1 }}>{item.step}</Text>
+                          </View>
+                        )
+                      )}
+                    </View>
+                  </View>
                 </View>
               </View>
-              <FlatList
-                contentContainerStyle={{
-                  gap: 4,
-                  alignItems: "center",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                }}
-                horizontal
-                data={currentRecipe.dishTypes}
-                renderItem={({ item }: any) => (
-                  <Chip
-                    compact
-                    textStyle={{ fontSize: 10, fontFamily: "RobotoMedium" }}
-                    style={{ borderRadius: 50 }}
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </Chip>
-                )}
-              />
-            </View>
-            <View>
-              <View
-                style={{
-                  backgroundColor: "#f9f9f9",
-                  height: "auto",
-                  borderRadius: 16,
-                  padding: 8,
-                }}
-              >
-                <FlatList
-                  horizontal
-                  scrollEnabled={false}
-                  contentContainerStyle={{
-                    justifyContent: "space-evenly",
-                    width: "100%",
-                  }}
-                  data={extraData}
-                  renderItem={({ item }) => (
-                    <ExtraDataItem
-                      data={item.data}
-                      icon={item.icon}
-                      name={item.name}
-                    />
-                  )}
-                />
-              </View>
-            </View>
-            {currentRecipe?.extendedIngredients && (
-              <View style={{ gap: 8 }}>
-                <Text style={{ fontFamily: "RobotoBold", fontSize: 16 }}>
-                  Ingredientes
-                </Text>
-                <FlatList
-                  contentContainerStyle={{
-                    justifyContent: "space-evenly",
-                    width: "100%",
-                    paddingLeft: 8,
-                  }}
-                  data={currentRecipe.extendedIngredients}
-                  renderItem={({ item }) => (
-                    <Text>
-                      <Text style={{ color: theme.colors.inversePrimary }}>
-                        •{" "}
-                      </Text>
-                      {item.original}
-                    </Text>
-                  )}
-                />
-              </View>
-            )}
-            <View>
-              <Text>Instrucciones</Text>
-            </View>
+            </ScrollView>
+            <BackButton />
           </View>
+        </SafeAreaView>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#fff",
+            justifyContent: "center",
+          }}
+        >
+          <ActivityIndicator />
         </View>
       )}
     </>

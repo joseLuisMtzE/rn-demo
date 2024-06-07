@@ -183,7 +183,7 @@ export default function App() {
           </Stack.Group>
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen
-              options={{ presentation: "modal" }}
+              // options={{ presentation: "modal" }}
               name="recipeDetailScreen"
               component={RecipeDetailScreen}
             />

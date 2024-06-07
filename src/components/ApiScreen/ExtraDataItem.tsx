@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, useTheme } from "react-native-paper";
 
 interface ExtraDataItemProps {
-  data: number;
+  data: number | string;
   icon: string;
   name: string;
 }

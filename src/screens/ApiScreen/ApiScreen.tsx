@@ -98,7 +98,7 @@ export default function ApiScreen({ navigation, route }: Props) {
       await axios
         .get(`${API_BASE_URL}/random?number=20&apiKey=${API_KEY}`)
         .then((res) => {
-          console.log(res.data.recipes);
+          // console.log(res.data.recipes);
           // res.data.recipes.map((i: { title: any }) => {
           //   console.log(i.title);
           // });
@@ -127,7 +127,6 @@ export default function ApiScreen({ navigation, route }: Props) {
   useEffect(() => {
     // getRandomRecipes();
     getDummyRecipes();
-    return () => clearTimeout(undefined);
   }, []);
 
   return (
