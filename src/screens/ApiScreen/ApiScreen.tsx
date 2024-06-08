@@ -19,6 +19,7 @@ import {
   API_BASE_URL,
   API_KEY,
   jsonDummyRecipes,
+  mealTypes,
 } from "../../constants/Constants";
 
 interface Props {
@@ -30,6 +31,7 @@ interface categoriesProps {
   icon: string;
   label: string;
   title: string;
+  searchText: string;
 }
 [];
 
@@ -43,49 +45,6 @@ export default function ApiScreen({ navigation, route }: Props) {
   useEffect(() => {
     navigation.setOptions({ title: route.params.title });
   }, []);
-
-  const categories: categoriesProps[] = [
-    {
-      icon: "food-steak",
-      label: "Comida",
-      title: "beef_ribs",
-    },
-    {
-      icon: "food",
-      label: "Rapida",
-      title: "burger",
-    },
-    {
-      icon: "taco",
-      label: "Mexicana",
-      title: "burrito",
-    },
-    {
-      icon: "cupcake",
-      label: "Postres",
-      title: "cupcakes",
-    },
-    {
-      icon: "glass-cocktail",
-      label: "Drinks",
-      title: "coffee",
-    },
-    {
-      icon: "food-turkey",
-      label: "Pollo",
-      title: "chicken_wings",
-    },
-    {
-      icon: "pasta",
-      label: "Pastas",
-      title: "lasagna",
-    },
-    {
-      icon: "noodles",
-      label: "Sushi",
-      title: "sushi",
-    },
-  ];
 
   const getRandomRecipes = async () => {
     setRefreshing(true);
@@ -119,9 +78,13 @@ export default function ApiScreen({ navigation, route }: Props) {
     navigation.navigate("recipeDetailScreen", { id });
   };
 
+  const handleMealTypePress = (mealType: string, label: string) => {
+    navigation.navigate("recipeMealTypeScreen", { mealType, label });
+  };
+
   useEffect(() => {
-    getRandomRecipes();
-    // getDummyRecipes();
+    // getRandomRecipes();
+    getDummyRecipes();
   }, []);
 
   return (
@@ -158,7 +121,7 @@ export default function ApiScreen({ navigation, route }: Props) {
 
         <View style={{}}>
           <FlatList
-            data={categories}
+            data={mealTypes}
             renderItem={({ item }) => (
               <View style={{ alignItems: "center" }}>
                 <IconButton
@@ -166,10 +129,10 @@ export default function ApiScreen({ navigation, route }: Props) {
                   mode="contained"
                   containerColor={theme.colors.inversePrimary}
                   iconColor={theme.colors.onPrimaryContainer}
-                  size={28}
-                  onPress={() => console.log(item.label)}
+                  size={32}
+                  onPress={() => handleMealTypePress(item.type, item.label)}
                 />
-                <Text>{item.label}</Text>
+                <Text style={{ fontSize: 12 }}>{item.label}</Text>
               </View>
             )}
             horizontal

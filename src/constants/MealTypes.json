@@ -1,0 +1,67 @@
+[
+  {
+    "icon": "food-steak",
+    "label": "Platillos",
+    "type": "main course"
+  },
+  {
+    "icon": "sprout",
+    "label": "Guarniciones",
+    "type": "side dish"
+  },
+  {
+    "icon": "cupcake",
+    "label": "Postres",
+    "type": "dessert"
+  },
+  {
+    "icon": "french-fries",
+    "label": "Snacks",
+    "type": "snack"
+  },
+  {
+    "icon": "bowl-mix",
+    "label": "Ensaladas",
+    "type": "salad"
+  },
+  {
+    "icon": "baguette",
+    "label": "Panes",
+    "type": "bread"
+  },
+  {
+    "icon": "egg-fried",
+    "label": "Desayunos",
+    "type": "breakfast"
+  },
+  {
+    "icon": "pot-steam",
+    "label": "Sopas",
+    "type": "soup"
+  },
+  {
+    "icon": "liquor",
+    "label": "Bebidas",
+    "type": "beverage"
+  },
+  {
+    "icon": "soy-sauce",
+    "label": "Salsas",
+    "type": "sauce"
+  },
+  {
+    "icon": "shaker",
+    "label": "Marinados",
+    "type": "marinade"
+  },
+  {
+    "icon": "food-hot-dog",
+    "label": "FastFood",
+    "type": "fingerfood"
+  },
+  {
+    "icon": "glass-cocktail",
+    "label": "Cócteles",
+    "type": "drink"
+  }
+]

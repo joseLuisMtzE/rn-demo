@@ -26,6 +26,7 @@ import PedometerScreen from "./src/screens/SensorsScreen/PodometerScreen";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import RecipeDetailScreen from "./src/screens/ApiScreen/RecipeDetailScreen";
 import SearchRecipeScreen from "./src/screens/ApiScreen/SearchRecipeScreen";
+import RecipeMealTypeScreen from "./src/screens/ApiScreen/RecipeMealTypeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -189,9 +190,12 @@ export default function App() {
               component={RecipeDetailScreen}
             />
             <Stack.Screen
-              // options={{ presentation: "modal" }}
               name="searchRecipeScreen"
               component={SearchRecipeScreen}
+            />
+            <Stack.Screen
+              name="recipeMealTypeScreen"
+              component={RecipeMealTypeScreen}
             />
           </Stack.Group>
         </Stack.Navigator>
