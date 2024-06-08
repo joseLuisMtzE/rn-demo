@@ -1,17 +1,11 @@
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Image, FlatList, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../../constants/Constants";
-import { Chip, IconButton, useTheme } from "react-native-paper";
+import { ActivityIndicator, Chip, useTheme } from "react-native-paper";
 import ExtraDataItem from "../../components/ApiScreen/ExtraDataItem";
+import BackButton from "../../components/BackButton/BackButton";
 
 interface NavProps {
   navigation: any;
@@ -709,7 +703,9 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
     try {
       await axios
         .get(`${API_BASE_URL}/${id}/information?apiKey=${API_KEY}`)
-        .then((res) => setCurrentRecipe(res.data));
+        .then((res) => {
+          setCurrentRecipe(res.data);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -719,8 +715,8 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
   };
 
   useEffect(() => {
-    // getSpecificRecipe(id);
-    getDummySpecificRecipe();
+    getSpecificRecipe(id);
+    // getDummySpecificRecipe();
 
     return () => {};
   }, []);
@@ -765,22 +761,6 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
       setIsLoading(false);
     }
   }, [currentRecipe]);
-
-  const BackButton = () => (
-    <IconButton
-      style={{
-        position: "absolute",
-        zIndex: 1,
-        left: 4,
-      }}
-      icon={"chevron-left"}
-      mode="contained"
-      containerColor={theme.colors.primaryContainer}
-      iconColor={theme.colors.shadow}
-      size={28}
-      onPress={() => navigation.goBack()}
-    />
-  );
 
   return (
     <>
@@ -957,7 +937,7 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
                 </View>
               </View>
             </ScrollView>
-            <BackButton />
+            <BackButton navigation={navigation} />
           </View>
         </SafeAreaView>
       ) : (

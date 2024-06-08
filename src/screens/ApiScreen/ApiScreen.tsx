@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -10,11 +9,9 @@ import {
   View,
 } from "react-native";
 import {
+  ActivityIndicator,
   Chip,
-  Icon,
   IconButton,
-  MD3Colors,
-  Searchbar,
   useTheme,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -38,8 +35,6 @@ interface categoriesProps {
 
 export default function ApiScreen({ navigation, route }: Props) {
   const theme = useTheme();
-
-  const [searchQuery, setSearchQuery] = useState("");
 
   const [recipes, setRecipes] = useState<any>();
 
@@ -125,33 +120,43 @@ export default function ApiScreen({ navigation, route }: Props) {
   };
 
   useEffect(() => {
-    // getRandomRecipes();
-    getDummyRecipes();
+    getRandomRecipes();
+    // getDummyRecipes();
   }, []);
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
         <View
-          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <Text style={styles.headText}>
-            Prepara tus alimentos con las mejores
-            <Text style={[styles.headText, { color: "#ffd528" }]}>
-              {" "}
-              recetas{" "}
+          <View style={{ flex: 1 }}>
+            <Text style={styles.headText}>
+              Prepara tus alimentos con las mejores
+              <Text style={[styles.headText, { color: "#ffd528" }]}>
+                {" "}
+                recetas{" "}
+              </Text>
+              <Text style={styles.headText}>!</Text>
             </Text>
-            <Text style={styles.headText}>!</Text>
-          </Text>
-        </View>
-        <View>
-          <Searchbar
-            placeholder="Buscar..."
-            onChangeText={setSearchQuery}
-            value={searchQuery}
+          </View>
+          <IconButton
+            icon={"magnify"}
+            mode="contained"
+            containerColor={theme.colors.inverseOnSurface}
+            iconColor={theme.colors.inversePrimary}
+            size={32}
+            onPress={() => navigation.navigate("searchRecipeScreen")}
           />
         </View>
-        <View style={{ paddingVertical: 8 }}>
+
+        <View style={{}}>
           <FlatList
             data={categories}
             renderItem={({ item }) => (
