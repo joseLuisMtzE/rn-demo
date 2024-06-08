@@ -101,7 +101,6 @@ export default function SearchRecipeScreen({ navigation, route }: any) {
     setRecipesFound(null);
   };
 
-  // todo handle not found search
   const getSearchRecipes = async (query: string) => {
     try {
       await axios
@@ -113,6 +112,10 @@ export default function SearchRecipeScreen({ navigation, route }: any) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleRecipeSelected = (id: number) => {
+    navigation.navigate("recipeDetailScreen", { id: id });
   };
 
   useEffect(() => {
@@ -147,7 +150,10 @@ export default function SearchRecipeScreen({ navigation, route }: any) {
         <FlatList
           data={recipesFound}
           renderItem={({ item }: any) => (
-            <TouchableOpacity style={styles.recipesFoundItem}>
+            <TouchableOpacity
+              style={styles.recipesFoundItem}
+              onPress={() => handleRecipeSelected(item.id)}
+            >
               <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
