@@ -78,8 +78,12 @@ export default function ApiScreen({ navigation, route }: Props) {
     navigation.navigate("recipeDetailScreen", { id });
   };
 
-  const handleMealTypePress = (mealType: string, label: string) => {
-    navigation.navigate("recipeMealTypeScreen", { mealType, label });
+  const handleMealTypePress = (
+    mealType: string,
+    label: string,
+    icon: string
+  ) => {
+    navigation.navigate("recipeMealTypeScreen", { mealType, label, icon });
   };
 
   useEffect(() => {
@@ -130,7 +134,9 @@ export default function ApiScreen({ navigation, route }: Props) {
                   containerColor={theme.colors.inversePrimary}
                   iconColor={theme.colors.onPrimaryContainer}
                   size={32}
-                  onPress={() => handleMealTypePress(item.type, item.label)}
+                  onPress={() =>
+                    handleMealTypePress(item.type, item.label, item.icon)
+                  }
                 />
                 <Text style={{ fontSize: 12 }}>{item.label}</Text>
               </View>

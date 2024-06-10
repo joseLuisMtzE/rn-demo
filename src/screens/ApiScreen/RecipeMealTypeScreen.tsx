@@ -8,7 +8,12 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ActivityIndicator, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Avatar,
+  IconButton,
+  useTheme,
+} from "react-native-paper";
 import { API_BASE_URL, API_KEY } from "../../constants/Constants";
 import axios from "axios";
 import BackButton from "../../components/BackButton/BackButton";
@@ -79,9 +84,7 @@ const dummyRecipesbyMealType = [
 
 export default function RecipeMealTypeScreen({ navigation, route }: any) {
   const theme = useTheme();
-  const { mealType, label } = route.params;
-  console.log(route.params);
-
+  const { label, icon } = route.params;
   const [recipesByMealType, setRecipesByMealType] = useState<any>(null);
 
   const getRecipesByCategory = async (query: string) => {
@@ -120,7 +123,24 @@ export default function RecipeMealTypeScreen({ navigation, route }: any) {
               navigation={navigation}
               style={{ position: "relative" }}
             />
-            <Text style={styles.headText}>{label}</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Avatar.Icon
+                size={40}
+                icon={icon}
+                style={{ backgroundColor: "transparent" }}
+                color={theme.colors.inversePrimary}
+              />
+              <Text style={styles.headText}>{label}</Text>
+            </View>
+
+            <IconButton
+              icon={"magnify"}
+              mode="contained"
+              containerColor={theme.colors.inverseOnSurface}
+              iconColor={theme.colors.inversePrimary}
+              size={32}
+              onPress={() => navigation.navigate("searchRecipeScreen")}
+            />
           </View>
           <View style={{ flex: 1 }}>
             <FlatList
@@ -177,6 +197,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     gap: 8,
   },
 });
