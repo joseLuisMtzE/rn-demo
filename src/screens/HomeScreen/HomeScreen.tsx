@@ -44,7 +44,7 @@ const HomeScreen = ({ navigation }: Props) => {
       pathTo: "Animation",
       navigation: { navigation },
       description: "Animaciones, formularios, diseño responsive.",
-      disabled: true,
+      disabled: false,
     },
   ];
   return (

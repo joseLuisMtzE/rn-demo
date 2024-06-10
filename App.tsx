@@ -119,7 +119,11 @@ export default function App() {
               options={{ headerShown: false }}
             />
 
-            <Stack.Screen name="Animation" component={AnimationScreen} />
+            <Stack.Screen
+              name="Animation"
+              component={AnimationScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Group>
           <Stack.Group
             screenOptions={{
