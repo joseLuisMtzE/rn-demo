@@ -1,9 +1,22 @@
-import { View, Text, Image, FlatList, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+  Share,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../../constants/Constants";
-import { ActivityIndicator, Chip, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Chip,
+  IconButton,
+  useTheme,
+} from "react-native-paper";
 import ExtraDataItem from "../../components/ApiScreen/ExtraDataItem";
 import BackButton from "../../components/BackButton/BackButton";
 
@@ -692,7 +705,6 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
   const theme = useTheme();
 
   const { id } = route.params;
-  console.log(route.params);
 
   const [currentRecipe, setCurrentRecipe] = useState<any>(null);
   const [extraData, setExtraData] = useState<ExtraDataProps[]>([]);
@@ -762,6 +774,18 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
     }
   }, [currentRecipe]);
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: `Recipes App | ${currentRecipe.title}`,
+        message: `Recipes App | ${currentRecipe.title}\n \nPrepara tu comida ahora! ${currentRecipe.spoonacularSourceUrl}`,
+        url: currentRecipe.spoonacularSourceUrl,
+      });
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <>
       {!isLoading ? (
@@ -801,7 +825,9 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
                     <View
                       style={{
                         flex: 1,
-                        justifyContent: "center",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        flexDirection: "row",
                       }}
                     >
                       <Text
@@ -813,6 +839,14 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
                       >
                         {currentRecipe.title}
                       </Text>
+                      <IconButton
+                        icon={"share-variant"}
+                        mode="contained"
+                        containerColor={theme.colors.inverseOnSurface}
+                        iconColor={theme.colors.inversePrimary}
+                        size={24}
+                        onPress={onShare}
+                      />
                     </View>
                   </View>
                   <FlatList
