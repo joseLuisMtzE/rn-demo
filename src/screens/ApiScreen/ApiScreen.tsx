@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   Chip,
   IconButton,
+  Switch,
   useTheme,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -41,6 +42,8 @@ export default function ApiScreen({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<any>();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const [useDummy, setUseDummy] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({ title: route.params.title });
@@ -75,7 +78,7 @@ export default function ApiScreen({ navigation, route }: Props) {
   };
 
   const handlePressRecipe = (id: number) => {
-    navigation.navigate("recipeDetailScreen", { id });
+    navigation.navigate("recipeDetailScreen", { id, useDummy });
   };
 
   const handleMealTypePress = (
@@ -83,13 +86,17 @@ export default function ApiScreen({ navigation, route }: Props) {
     label: string,
     icon: string
   ) => {
-    navigation.navigate("recipeMealTypeScreen", { mealType, label, icon });
+    navigation.navigate("recipeMealTypeScreen", {
+      mealType,
+      label,
+      icon,
+      useDummy,
+    });
   };
 
   useEffect(() => {
-    getRandomRecipes();
-    // getDummyRecipes();
-  }, []);
+    useDummy ? getDummyRecipes() : getRandomRecipes();
+  }, [useDummy]);
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -113,14 +120,31 @@ export default function ApiScreen({ navigation, route }: Props) {
               <Text style={styles.headText}>!</Text>
             </Text>
           </View>
-          <IconButton
-            icon={"magnify"}
-            mode="contained"
-            containerColor={theme.colors.inverseOnSurface}
-            iconColor={theme.colors.inversePrimary}
-            size={32}
-            onPress={() => navigation.navigate("searchRecipeScreen")}
-          />
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Switch
+              trackColor={{ false: "#DDDDDD", true: "#6EDC5F" }}
+              thumbColor={"white"}
+              onValueChange={() => {
+                setUseDummy((prev) => !prev);
+              }}
+              value={useDummy}
+            />
+            <IconButton
+              icon={"magnify"}
+              mode="contained"
+              containerColor={theme.colors.inverseOnSurface}
+              iconColor={theme.colors.inversePrimary}
+              size={32}
+              onPress={() =>
+                navigation.navigate("searchRecipeScreen", { useDummy })
+              }
+            />
+          </View>
         </View>
 
         <View style={{}}>
@@ -156,8 +180,7 @@ export default function ApiScreen({ navigation, route }: Props) {
           {recipes ? (
             <FlatList
               refreshing={refreshing}
-              onRefresh={getRandomRecipes}
-              // onRefresh={getDummyRecipes}
+              onRefresh={useDummy ? getDummyRecipes : getRandomRecipes}
               numColumns={2}
               data={recipes}
               keyExtractor={(item) => item.id}
@@ -234,7 +257,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   container: {
-    paddingVertical: 16,
+    paddingTop: 16,
     paddingHorizontal: 16,
     gap: 16,
     flex: 1,

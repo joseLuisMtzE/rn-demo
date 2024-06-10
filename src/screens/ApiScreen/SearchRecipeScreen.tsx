@@ -10,76 +10,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar } from "react-native-paper";
 import axios from "axios";
-import { API_BASE_URL, API_KEY } from "../../constants/Constants";
+import {
+  API_BASE_URL,
+  API_KEY,
+  dummyRecipesFound,
+} from "../../constants/Constants";
 import BackButton from "../../components/BackButton/BackButton";
-
-const dummyRecipesFound = {
-  number: 10,
-  offset: 0,
-  results: [
-    {
-      id: 1095755,
-      image: "https://img.spoonacular.com/recipes/1095755-312x231.jpg",
-      imageType: "jpg",
-      title: "Quinoa and Kidney Bean Burgers",
-    },
-    {
-      id: 632115,
-      image: "https://img.spoonacular.com/recipes/632115-312x231.jpg",
-      imageType: "jpg",
-      title: "Almond Coffee Cupcakes with Kahlua Liqueur",
-    },
-    {
-      id: 653192,
-      image: "https://img.spoonacular.com/recipes/653192-312x231.jpg",
-      imageType: "jpg",
-      title: "No-Bake Fudge Brandy Brownies",
-    },
-    {
-      id: 646021,
-      image: "https://img.spoonacular.com/recipes/646021-312x231.jpg",
-      imageType: "jpg",
-      title: "Guilt-Free Brownie Batter Dip",
-    },
-    {
-      id: 664489,
-      image: "https://img.spoonacular.com/recipes/664489-312x231.jpg",
-      imageType: "jpg",
-      title: "Vegan Strawberry Cupcakes",
-    },
-    {
-      id: 157107,
-      image: "https://img.spoonacular.com/recipes/157107-312x231.jpg",
-      imageType: "jpg",
-      title: "Skinny Cheesecake Brownie Bites",
-    },
-    {
-      id: 646524,
-      image: "https://img.spoonacular.com/recipes/646524-312x231.jpg",
-      imageType: "jpg",
-      title: "Healthy Vegan Red Velvet Brownies",
-    },
-    {
-      id: 653907,
-      image: "https://img.spoonacular.com/recipes/653907-312x231.jpg",
-      imageType: "jpg",
-      title: "Orange Liqueur {Cointreau} Brownies",
-    },
-    {
-      id: 641604,
-      image: "https://img.spoonacular.com/recipes/641604-312x231.jpg",
-      imageType: "jpg",
-      title: "Double Dark Chocolate Zucchini Brownies",
-    },
-    {
-      id: 662585,
-      image: "https://img.spoonacular.com/recipes/662585-312x231.jpg",
-      imageType: "jpg",
-      title: "Sweet Potato Oven Fries",
-    },
-  ],
-  totalResults: 346,
-};
 
 export default function SearchRecipeScreen({ navigation, route }: any) {
   const searchInput = useRef<any>(null);
@@ -87,13 +23,20 @@ export default function SearchRecipeScreen({ navigation, route }: any) {
   const [recipesFound, setRecipesFound] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { useDummy } = route.params;
+
   useEffect(() => {
     searchInput.current?.focus();
   }, []);
 
   const handleSearch = () => {
     setIsLoading(true);
-    getSearchRecipes(searchQuery);
+    useDummy
+      ? setTimeout(() => {
+          setRecipesFound(dummyRecipesFound.results);
+          setIsLoading(false);
+        }, 1000)
+      : getSearchRecipes(searchQuery);
   };
 
   const handleClearInput = () => {
@@ -115,7 +58,7 @@ export default function SearchRecipeScreen({ navigation, route }: any) {
   };
 
   const handleRecipeSelected = (id: number) => {
-    navigation.navigate("recipeDetailScreen", { id: id });
+    navigation.navigate("recipeDetailScreen", { id: id, useDummy });
   };
 
   useEffect(() => {

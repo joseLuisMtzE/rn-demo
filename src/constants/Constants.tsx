@@ -34,3 +34,6 @@ export const dummyRecipesbyMealType = dummyRecipesbyMealTypeJson;
 
 import dummySpecificRecipeJson from "./DummySpecificRecipe.json";
 export const dummySpecificRecipe = dummySpecificRecipeJson;
+
+import dummyRecipesFoundJson from "./DummyRecipesFound.json";
+export const dummyRecipesFound = dummyRecipesFoundJson;

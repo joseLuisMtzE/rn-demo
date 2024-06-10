@@ -39,7 +39,7 @@ interface ExtraDataProps {
 export default function RecipeDetailScreen({ navigation, route }: NavProps) {
   const theme = useTheme();
 
-  const { id } = route.params;
+  const { id, useDummy } = route.params;
 
   const [currentRecipe, setCurrentRecipe] = useState<any>(null);
   const [extraData, setExtraData] = useState<ExtraDataProps[]>([]);
@@ -62,10 +62,7 @@ export default function RecipeDetailScreen({ navigation, route }: NavProps) {
   };
 
   useEffect(() => {
-    getSpecificRecipe(id);
-    // getDummySpecificRecipe();
-
-    return () => {};
+    useDummy ? getDummySpecificRecipe() : getSpecificRecipe(id);
   }, []);
 
   useEffect(() => {

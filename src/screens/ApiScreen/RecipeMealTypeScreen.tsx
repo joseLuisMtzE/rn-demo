@@ -24,7 +24,7 @@ import BackButton from "../../components/BackButton/BackButton";
 
 export default function RecipeMealTypeScreen({ navigation, route }: any) {
   const theme = useTheme();
-  const { mealType, label, icon } = route.params;
+  const { mealType, label, icon, useDummy } = route.params;
   const [recipesByMealType, setRecipesByMealType] = useState<any>(null);
 
   const getRecipesByCategory = async (query: string) => {
@@ -46,12 +46,11 @@ export default function RecipeMealTypeScreen({ navigation, route }: any) {
   };
 
   const handlePressRecipe = (id: number) => {
-    navigation.navigate("recipeDetailScreen", { id });
+    navigation.navigate("recipeDetailScreen", { id, useDummy });
   };
 
   useEffect(() => {
-    getRecipesByCategory(mealType);
-    // getDummyRecipesByCategory();
+    useDummy ? getDummyRecipesByCategory() : getRecipesByCategory(mealType);
   }, []);
 
   return (
@@ -79,7 +78,9 @@ export default function RecipeMealTypeScreen({ navigation, route }: any) {
               containerColor={theme.colors.inverseOnSurface}
               iconColor={theme.colors.inversePrimary}
               size={32}
-              onPress={() => navigation.navigate("searchRecipeScreen")}
+              onPress={() =>
+                navigation.navigate("searchRecipeScreen", { useDummy })
+              }
             />
           </View>
           <View style={{ flex: 1 }}>
