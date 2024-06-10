@@ -18,7 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   API_BASE_URL,
   API_KEY,
-  jsonDummyRecipes,
+  dummyRecipes,
   mealTypes,
 } from "../../constants/Constants";
 
@@ -70,7 +70,7 @@ export default function ApiScreen({ navigation, route }: Props) {
   const getDummyRecipes = () => {
     setRefreshing(true);
     setRecipes(null);
-    setRecipes(jsonDummyRecipes);
+    setRecipes(dummyRecipes);
     setRefreshing(false);
   };
 

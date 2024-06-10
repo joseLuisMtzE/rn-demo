@@ -14,73 +14,13 @@ import {
   IconButton,
   useTheme,
 } from "react-native-paper";
-import { API_BASE_URL, API_KEY } from "../../constants/Constants";
+import {
+  API_BASE_URL,
+  API_KEY,
+  dummyRecipesbyMealType,
+} from "../../constants/Constants";
 import axios from "axios";
 import BackButton from "../../components/BackButton/BackButton";
-
-const dummyRecipesbyMealType = [
-  {
-    id: 661925,
-    image: "https://img.spoonacular.com/recipes/661925-312x231.jpg",
-    imageType: "jpg",
-    title: "Strawberry-Mango Quinoa Salad",
-  },
-  {
-    id: 157344,
-    image: "https://img.spoonacular.com/recipes/157344-312x231.jpg",
-    imageType: "jpg",
-    title: "Spicy Salad with Kidney Beans, Cheddar, and Nuts",
-  },
-  {
-    id: 661340,
-    image: "https://img.spoonacular.com/recipes/661340-312x231.jpg",
-    imageType: "jpg",
-    title: "Spinach Salad with Strawberry Vinaigrette",
-  },
-  {
-    id: 632269,
-    image: "https://img.spoonacular.com/recipes/632269-312x231.jpg",
-    imageType: "jpg",
-    title: "Amaranth and Roast Veggie Salad",
-  },
-  {
-    id: 637162,
-    image: "https://img.spoonacular.com/recipes/637162-312x231.jpg",
-    imageType: "jpg",
-    title: "Carrot and Cabbage Salad With Coriander+cumin Dry Rub",
-  },
-  {
-    id: 649944,
-    image: "https://img.spoonacular.com/recipes/649944-312x231.jpg",
-    imageType: "jpg",
-    title: "Lentil Mango Salad",
-  },
-  {
-    id: 659927,
-    image: "https://img.spoonacular.com/recipes/659927-312x231.jpg",
-    imageType: "jpg",
-    title: "Shrimp and Avocado Salad",
-  },
-  {
-    id: 644826,
-    image: "https://img.spoonacular.com/recipes/644826-312x231.jpg",
-    imageType: "jpg",
-    title: "Gluten Free Dairy Free Sugar Free Chinese Chicken Salad",
-  },
-  {
-    id: 657719,
-    image: "https://img.spoonacular.com/recipes/657719-312x231.jpg",
-    imageType: "jpg",
-    title: "Radish & Snap Pea Quinoa Salad",
-  },
-  {
-    id: 659143,
-    image: "https://img.spoonacular.com/recipes/659143-312x231.jpg",
-    imageType: "jpg",
-    title:
-      'Salmon, Watercress, Fennel and Baby Beetroot Salad With Lemony "Caviar" Dressing',
-  },
-];
 
 export default function RecipeMealTypeScreen({ navigation, route }: any) {
   const theme = useTheme();
