@@ -183,7 +183,11 @@ export default function RecipeMealTypeScreen({ navigation, route }: any) {
           </View>
         </View>
       ) : (
-        <ActivityIndicator />
+        <View
+          style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+        >
+          <ActivityIndicator />
+        </View>
       )}
     </SafeAreaView>
   );

@@ -212,7 +212,15 @@ export default function ApiScreen({ navigation, route }: Props) {
               overScrollMode={"never"}
             />
           ) : (
-            <ActivityIndicator />
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <ActivityIndicator />
+            </View>
           )}
         </View>
       </View>
