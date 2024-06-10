@@ -87,8 +87,8 @@ export default function ApiScreen({ navigation, route }: Props) {
   };
 
   useEffect(() => {
-    // getRandomRecipes();
-    getDummyRecipes();
+    getRandomRecipes();
+    // getDummyRecipes();
   }, []);
 
   return (
@@ -156,8 +156,8 @@ export default function ApiScreen({ navigation, route }: Props) {
           {recipes ? (
             <FlatList
               refreshing={refreshing}
-              // onRefresh={getRandomRecipes}
-              onRefresh={getDummyRecipes}
+              onRefresh={getRandomRecipes}
+              // onRefresh={getDummyRecipes}
               numColumns={2}
               data={recipes}
               keyExtractor={(item) => item.id}

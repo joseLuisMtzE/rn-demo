@@ -84,7 +84,7 @@ const dummyRecipesbyMealType = [
 
 export default function RecipeMealTypeScreen({ navigation, route }: any) {
   const theme = useTheme();
-  const { label, icon } = route.params;
+  const { mealType, label, icon } = route.params;
   const [recipesByMealType, setRecipesByMealType] = useState<any>(null);
 
   const getRecipesByCategory = async (query: string) => {
@@ -110,8 +110,8 @@ export default function RecipeMealTypeScreen({ navigation, route }: any) {
   };
 
   useEffect(() => {
-    // getRecipesByCategory(mealType);
-    getDummyRecipesByCategory();
+    getRecipesByCategory(mealType);
+    // getDummyRecipesByCategory();
   }, []);
 
   return (
