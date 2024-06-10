@@ -109,14 +109,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     elevation: 5,
-    width: "48%",
-    padding: 4,
+    padding: 8,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 3 },
   },
   cardTitle: {
     fontSize: 20,
     fontFamily: "RobotoBold",
+    textAlign: "center",
   },
   ball: {
     width: 50,

@@ -1,0 +1,50 @@
+[
+  {
+    "icon": "food-steak",
+    "label": "Carnes",
+    "title": "beef_ribs",
+    "searchText": "beef"
+  },
+  {
+    "icon": "food",
+    "label": "Rapida",
+    "title": "burger",
+    "searchText": "american"
+  },
+  {
+    "icon": "taco",
+    "label": "Mexicana",
+    "title": "burrito",
+    "searchText": "mexican"
+  },
+  {
+    "icon": "cupcake",
+    "label": "Postres",
+    "title": "cupcakes",
+    "searchText": "dessert"
+  },
+  {
+    "icon": "glass-cocktail",
+    "label": "Drinks",
+    "title": "coffee",
+    "searchText": "drinks"
+  },
+  {
+    "icon": "food-turkey",
+    "label": "Pollo",
+    "title": "chicken_wings",
+    "searchText": "chicken"
+  },
+  {
+    "icon": "pasta",
+    "label": "Pastas",
+    "title": "lasagna",
+    "searchText": "italian"
+  },
+  {
+    "icon": "noodles",
+    "label": "Sushi",
+    "title": "sushi",
+    "searchText": "japanese"
+  }
+]

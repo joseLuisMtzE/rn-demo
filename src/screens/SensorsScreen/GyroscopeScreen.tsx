@@ -53,22 +53,31 @@ export default function GyroscopeScreen() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={subscription ? _unsubscribe : _subscribe}
-            style={styles.button}
+            style={[
+              styles.button,
+              subscription && {
+                backgroundColor: "#6EDC5F",
+              },
+            ]}
           >
-            <Text>{subscription ? "On" : "Off"}</Text>
+            <Text style={{ color: subscription && "white" }}>
+              {subscription ? "On" : "Off"}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={_slow}
             style={[styles.button, styles.middleButton]}
           >
-            <Text>Slow</Text>
+            <Text>Lento</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={_fast} style={styles.button}>
-            <Text>Fast</Text>
+            <Text>Rápido</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <AnimatedView style={[animatedStyle, styles.ball]} />
+      <View style={styles.ballsContainer}>
+        <AnimatedView style={[animatedStyle, styles.ball]} />
+      </View>
     </View>
   );
 }
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   ball: {
     width: 50,
@@ -94,7 +103,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 5,
     padding: 8,
-    position: "absolute",
     top: 0,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 3 },
@@ -115,5 +123,15 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: "#ccc",
+  },
+  ballsContainer: {
+    overflow: "hidden",
+    backgroundColor: "#FFF",
+    width: "90%",
+    height: "70%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 16,
+    elevation: 3,
   },
 });
