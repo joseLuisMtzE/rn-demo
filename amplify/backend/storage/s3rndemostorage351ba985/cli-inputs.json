@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3rndemostorage351ba985",
+  "bucketName": "rndemo-storage-351ba985",
+  "policyUUID": "213b36bc",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
