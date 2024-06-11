@@ -9,6 +9,7 @@ import { I18n } from "aws-amplify/utils";
 import { fetchAuthSession, getCurrentUser, signIn } from "aws-amplify/auth";
 import Storage, { list, remove, uploadData } from "aws-amplify/storage";
 import React from "react";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
 Amplify.configure(config);
 
@@ -156,10 +157,9 @@ export default function AnimationScreen({ navigation, route }: Props) {
   async function currentSession() {
     try {
       const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
-      console.log(accessToken.payload.exp);
-      accessToken?.payload?.exp < Date.now()
-        ? setIsAuth(true)
-        : setIsAuth(false);
+      const exp = accessToken?.payload.exp;
+      console.log(exp);
+      exp && exp < Date.now() ? setIsAuth(true) : setIsAuth(false);
     } catch (err) {
       console.log(err);
     }
@@ -195,9 +195,25 @@ export default function AnimationScreen({ navigation, route }: Props) {
     }
   };
 
+  const width = useSharedValue(100);
+
+  const handlePress = () => {
+    width.value = withSpring(width.value + 50);
+  };
+
   return (
     <Authenticator.Provider>
       <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Animated.View
+            style={{
+              width,
+              height: 100,
+              backgroundColor: "violet",
+            }}
+          />
+          <Button onPress={handlePress} title="Click me" />
+        </View>
         <Text>{isAuth ? "Autenticado!" : "Por favor inicia sesion"}</Text>
         <Button title="Sign in" onPress={onSingIn} />
         <SignOutButton />
