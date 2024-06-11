@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
@@ -8,6 +8,7 @@ import config from "../../aws-exports";
 import { I18n } from "aws-amplify/utils";
 import { fetchAuthSession, getCurrentUser, signIn } from "aws-amplify/auth";
 import Storage, { list, remove, uploadData } from "aws-amplify/storage";
+import React from "react";
 
 Amplify.configure(config);
 
@@ -115,7 +116,7 @@ export default function AnimationScreen({ navigation, route }: Props) {
 
   const [items, setItems] = useState<any>(null);
   useEffect(() => {
-    navigation.setOptions({ title: route.params.title });
+    currentSession();
   }, []);
 
   function SignOutButton() {
@@ -152,6 +153,18 @@ export default function AnimationScreen({ navigation, route }: Props) {
     }
   };
 
+  async function currentSession() {
+    try {
+      const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
+      console.log(accessToken.payload.exp);
+      accessToken?.payload?.exp < Date.now()
+        ? setIsAuth(true)
+        : setIsAuth(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const onSingIn = async () => {
     try {
       await signIn({
@@ -185,27 +198,6 @@ export default function AnimationScreen({ navigation, route }: Props) {
   return (
     <Authenticator.Provider>
       <SafeAreaView style={styles.container}>
-        {/* <Button title="Sign in" onPress={onSingIn} />
-        <SignOutButton /> */}
-        {/* <FlatList
-          data={[{}, {}, {}, {}]}
-          renderItem={(item) => (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>A</Text>
-            </View>
-          )}
-          style={{ backgroundColor: "#c9c9", width: "100%" }}
-          horizontal
-          showsHorizontalScrollIndicator
-          pagingEnabled
-          bounces={false}
-        /> */}
         <Text>{isAuth ? "Autenticado!" : "Por favor inicia sesion"}</Text>
         <Button title="Sign in" onPress={onSingIn} />
         <SignOutButton />
@@ -214,8 +206,8 @@ export default function AnimationScreen({ navigation, route }: Props) {
         <FlatList
           data={items}
           renderItem={({ item }) => (
-            <View>
-              <Text>{item.path}</Text>
+            <View className="items-center justify-center bg-sky-600 w-full ">
+              <Text className="text-white">{item.path}</Text>
               <Button title="X" onPress={() => deleteItem(item.path)} />
             </View>
           )}
