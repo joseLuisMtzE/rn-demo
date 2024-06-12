@@ -27,6 +27,8 @@ import { DefaultTheme, PaperProvider } from "react-native-paper";
 import RecipeDetailScreen from "./src/screens/ApiScreen/RecipeDetailScreen";
 import SearchRecipeScreen from "./src/screens/ApiScreen/SearchRecipeScreen";
 import RecipeMealTypeScreen from "./src/screens/ApiScreen/RecipeMealTypeScreen";
+import LoginScreen from "./src/screens/AnimationScreen/LoginScreen";
+import SignUpScreen from "./src/screens/AnimationScreen/SignUpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -201,6 +203,10 @@ export default function App() {
               name="recipeMealTypeScreen"
               component={RecipeMealTypeScreen}
             />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="loginScreen" component={LoginScreen} />
+            <Stack.Screen name="signUpScreen" component={SignUpScreen} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
