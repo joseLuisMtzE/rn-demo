@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Animated, {
@@ -14,8 +14,35 @@ import Animated, {
   ZoomInEasyDown,
   FadeInDown,
 } from "react-native-reanimated";
+import { Controller, useForm } from "react-hook-form";
+import { SignInInput } from "aws-amplify/auth";
+import { useAuth } from "../../context/AuthContex";
 
 export default function LoginScreen({ navigation, route }: any) {
+  const { onSignIn, currentAuthenticatedUser } = useAuth();
+
+  const { username } = route?.params || {};
+
+  const passwordRef = useRef<any>(null);
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: SignInInput) => onSignIn(data);
+
+  useEffect(() => {
+    currentAuthenticatedUser();
+  }, []);
+
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1 }}
@@ -26,6 +53,7 @@ export default function LoginScreen({ navigation, route }: any) {
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
     >
+      {username && setValue("username", username)}
       <View className="bg-white h-full w-full">
         <StatusBar style="light" />
         <Image
@@ -90,17 +118,65 @@ export default function LoginScreen({ navigation, route }: any) {
               </Text>
 
               <View className="bg-black/5 p-5 rounded-2xl w-full">
-                <TextInput placeholder="Email" placeholderTextColor={"gray"} />
+                {errors.username && (
+                  <Text className="text-[#AB165A]">
+                    {errors.username.message}
+                  </Text>
+                )}
+                <Controller
+                  control={control}
+                  rules={{
+                    maxLength: 100,
+                    required: "Campo requerido",
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <>
+                      <TextInput
+                        placeholder="Email"
+                        placeholderTextColor={"gray"}
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        onSubmitEditing={() => passwordRef?.current?.focus()}
+                        returnKeyType="next"
+                      />
+                    </>
+                  )}
+                  name="username"
+                />
               </View>
               <View className="bg-black/5 p-5 rounded-2xl w-full">
-                <TextInput
-                  placeholder="Contraseña"
-                  placeholderTextColor={"gray"}
-                  secureTextEntry
+                {errors.password && (
+                  <Text className="text-[#AB165A]">
+                    {errors.password.message}
+                  </Text>
+                )}
+                <Controller
+                  control={control}
+                  rules={{
+                    maxLength: 100,
+                    required: "Campo requerido",
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="Contraseña"
+                      placeholderTextColor={"gray"}
+                      secureTextEntry
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      onSubmitEditing={handleSubmit(onSubmit)}
+                      ref={passwordRef}
+                    />
+                  )}
+                  name="password"
                 />
               </View>
               <View className="w-full">
-                <TouchableOpacity className="w-full bg-[#AB165A] p-3 rounded-2xl  ">
+                <TouchableOpacity
+                  className="w-full bg-[#AB165A] p-3 rounded-2xl  "
+                  onPress={handleSubmit(onSubmit)}
+                >
                   <Text className="text-white text-center">Entrar</Text>
                 </TouchableOpacity>
               </View>
