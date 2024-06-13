@@ -46,6 +46,13 @@ const HomeScreen = ({ navigation }: Props) => {
       description: "Animaciones, formularios, diseño responsive.",
       disabled: false,
     },
+    {
+      label: "Forms",
+      pathTo: "Forms",
+      navigation: { navigation },
+      description: "Componentes para formularios",
+      disabled: true,
+    },
   ];
   return (
     <SafeAreaView style={styles.container}>
