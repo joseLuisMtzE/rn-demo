@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -20,7 +21,7 @@ import { useAuth } from "../../context/AuthContex";
 import LottieView from "lottie-react-native";
 
 export default function LoginScreen({ navigation, route }: any) {
-  const { onSignIn, currentAuthenticatedUser } = useAuth();
+  const { onSignIn, currentAuthenticatedUser, isLoading } = useAuth();
 
   const { username } = route?.params || {};
 
@@ -176,8 +177,13 @@ export default function LoginScreen({ navigation, route }: any) {
                 <TouchableOpacity
                   className="w-full bg-[#AB165A] p-3 rounded-2xl  "
                   onPress={handleSubmit(onSubmit)}
+                  disabled={isLoading}
                 >
-                  <Text className="text-white text-center">Entrar</Text>
+                  {isLoading ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    <Text className="text-white text-center">Entrar</Text>
+                  )}
                 </TouchableOpacity>
               </View>
               <View className="flex-row justify-center gap-1 m-4">

@@ -34,6 +34,7 @@ interface AuthContextType {
   handleResendCode: (username: ResendSignUpCodeInput) => Promise<void>;
   Toast: (msg: string) => void;
   cleanSignUpFlow: () => void;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,8 +43,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [signUpFlow, setSignUpFlow] = useState<SignUpOutput>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSignIn = async ({ username, password }: SignInInput) => {
+    setIsLoading(true);
     try {
       await signIn({
         username,
@@ -52,10 +55,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           authFlowType: "USER_PASSWORD_AUTH",
         },
       });
+
+      setIsLoading(false);
+
       setIsAuthenticated(true);
       setUser(user);
       Toast(`Bienvenido`);
     } catch (error) {
+      setIsLoading(false);
+
       console.error("Error signing in", error);
       Toast(`Error signing in: ${error}`);
     }
@@ -110,6 +118,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       // });
 
       setSignUpFlow({ isSignUpComplete: true, nextStep: "DONE" });
+      // setSignUpFlow({ isSignUpComplete, nextStep });
     } catch (error) {
       console.warn("error confirming sign up", error);
     }
@@ -162,6 +171,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         handleResendCode,
         Toast,
         cleanSignUpFlow,
+        isLoading,
       }}
     >
       {children}
