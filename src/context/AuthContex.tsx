@@ -74,17 +74,25 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const onSignUp = async ({ username, password }: SignUpParameters) => {
     try {
-      const { isSignUpComplete, userId, nextStep } = await signUp({
-        username,
-        password,
-        options: {
-          userAttributes: {
-            email: username,
-          },
-          autoSignIn: true,
+      // const { isSignUpComplete, userId, nextStep } = await signUp({
+      //   username,
+      //   password,
+      //   options: {
+      //     userAttributes: {
+      //       email: username,
+      //     },
+      //     autoSignIn: true,
+      //   },
+      // });
+      setSignUpFlow({
+        isSignUpComplete: false,
+        userId: "",
+        nextStep: {
+          signUpStep: "CONFIRM_SIGN_UP",
+          codeDeliveryDetails: { destinationdestination: "MOCKY" },
         },
       });
-      setSignUpFlow({ isSignUpComplete, userId, nextStep });
+      // setSignUpFlow({ isSignUpComplete, userId, nextStep });
     } catch (error) {
       console.warn("error signing up:", error);
       Toast(`error signing up: ${error}`);
@@ -96,12 +104,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     confirmationCode,
   }: ConfirmSignUpInput) => {
     try {
-      const { isSignUpComplete, nextStep } = await confirmSignUp({
-        username,
-        confirmationCode,
-      });
+      // const { isSignUpComplete, nextStep } = await confirmSignUp({
+      //   username,
+      //   confirmationCode,
+      // });
 
-      setSignUpFlow({ isSignUpComplete, nextStep });
+      setSignUpFlow({ isSignUpComplete: true, nextStep: "DONE" });
     } catch (error) {
       console.warn("error confirming sign up", error);
     }

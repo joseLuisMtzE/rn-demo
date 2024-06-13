@@ -17,6 +17,7 @@ import Animated, {
 import { Controller, useForm } from "react-hook-form";
 import { SignInInput } from "aws-amplify/auth";
 import { useAuth } from "../../context/AuthContex";
+import LottieView from "lottie-react-native";
 
 export default function LoginScreen({ navigation, route }: any) {
   const { onSignIn, currentAuthenticatedUser } = useAuth();
@@ -53,7 +54,6 @@ export default function LoginScreen({ navigation, route }: any) {
       showsVerticalScrollIndicator={false}
       overScrollMode="never"
     >
-      {username && setValue("username", username)}
       <View className="bg-white h-full w-full">
         <StatusBar style="light" />
         <Image
