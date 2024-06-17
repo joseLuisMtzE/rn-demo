@@ -47,7 +47,7 @@ export default function StorageScreen({ navigation, route }: Props) {
           key.startsWith(NOTES_APP_PREFIX)
         );
 
-        console.log(filteredKeys);
+        // console.log(filteredKeys);
         setNoteKeys([...filteredKeys]);
       });
     } catch (error) {
@@ -57,13 +57,12 @@ export default function StorageScreen({ navigation, route }: Props) {
 
   const newNote = async (note: Object) => {
     try {
-      let id = uuid.v4().toString();
-      await AsyncStorage.setItem(
-        `${NOTES_APP_PREFIX}:${id}`,
-        JSON.stringify({ ...note, id })
-      ).then(() => {
-        getAllDocs();
-      });
+      let id = `${NOTES_APP_PREFIX}:${uuid.v4().toString()}`;
+      await AsyncStorage.setItem(id, JSON.stringify({ ...note, id })).then(
+        () => {
+          getAllDocs();
+        }
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -92,6 +91,7 @@ export default function StorageScreen({ navigation, route }: Props) {
         let arr: NotesProps[] = [];
         for (const [key, value] of data) {
           if (value) {
+            console.log(value);
             let itemValue = JSON.parse(value);
             arr.push(itemValue);
           }
