@@ -43,11 +43,7 @@ export default function SignUpScreen({ navigation, route }: any) {
 
   useEffect(() => {
     if (signUpFlow !== undefined && signUpFlow.isSignUpComplete) {
-      console.log("isSignUpComplete????", signUpFlow.isSignUpComplete);
       setSignUpCompleteAnimation(true);
-      // const { username } = getValues();
-      // navigation.navigate("loginScreen", { username });
-      // cleanSignUpFlow();
     }
   }, [signUpFlow]);
 
@@ -69,7 +65,6 @@ export default function SignUpScreen({ navigation, route }: any) {
   console.log(signUpCompleteAnimation);
 
   const handleAnimationFinish = () => {
-    console.log("La animación ha terminado");
     const { username } = getValues();
     cleanSignUpFlow();
     navigation.navigate("loginScreen", { username });
