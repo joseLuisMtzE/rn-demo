@@ -5,6 +5,7 @@ import FabButton from "../../components/FabButton/FabButton";
 import NoteItem from "../../components/NoteItem/NoteItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { NOTES_APP_PREFIX } from "../../constants/Constants";
 
 interface Props {
   navigation: any;
@@ -41,7 +42,14 @@ export default function StorageScreen({ navigation, route }: Props) {
 
   const getAllDocs = async () => {
     try {
-      await AsyncStorage.getAllKeys().then((keys) => setNoteKeys([...keys]));
+      await AsyncStorage.getAllKeys().then((keys) => {
+        const filteredKeys = keys.filter((key) =>
+          key.startsWith(NOTES_APP_PREFIX)
+        );
+
+        console.log(filteredKeys);
+        setNoteKeys([...filteredKeys]);
+      });
     } catch (error) {
       console.error(error);
     }
@@ -50,11 +58,12 @@ export default function StorageScreen({ navigation, route }: Props) {
   const newNote = async (note: Object) => {
     try {
       let id = uuid.v4().toString();
-      await AsyncStorage.setItem(id, JSON.stringify({ ...note, id })).then(
-        () => {
-          getAllDocs();
-        }
-      );
+      await AsyncStorage.setItem(
+        `${NOTES_APP_PREFIX}:${id}`,
+        JSON.stringify({ ...note, id })
+      ).then(() => {
+        getAllDocs();
+      });
     } catch (error) {
       console.error(error);
     } finally {

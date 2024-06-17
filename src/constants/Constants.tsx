@@ -15,6 +15,7 @@ export const COLORS: string[] = [
 export const API_BASE_URL: string = "https://api.spoonacular.com/recipes";
 export const API_KEY: string = "0747760e905642be971f7b505acb73b4";
 // export const API_KEY: string = "9bfbee9a58fe4acdb9a0f54708c618e6";
+export const NOTES_APP_PREFIX: string = "notes";
 
 import DummyRecipesDataJson from "./DummyRecipesData.json";
 export const dummyRecipes = DummyRecipesDataJson;
