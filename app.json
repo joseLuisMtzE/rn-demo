@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rn-demo",
+    "name": "RN Demo",
     "slug": "rn-demo",
     "version": "1.0.0",
     "orientation": "default",
@@ -22,7 +22,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["andorid.permissions.HIGH_SAMPLING_RATE_SENSORS"]
+      "permissions": [
+        "andorid.permissions.HIGH_SAMPLING_RATE_SENSORS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.joseluismtze.rndemo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +38,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ed5d3b2e-793f-4e1d-a46d-7f81c7f0e85f"
+      }
+    }
   }
 }
